@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,11 +28,14 @@ public class ChatBotController {
     @Value("${open_ai_key}")
     private String openAiKey;
 
-    @Value("${translator_client_id}")
+    /*@Value("${translator_client_id}")
     private String clientId;
 
     @Value("${translator_client_secret}")
-    private String clientSecret;
+    private String clientSecret;*/
+
+    @Autowired
+    private TranslatorKoToEn translatorKoToEn;
 
     private static final String CHATGPT_API_URL = "https://api.openai.com/v1/completions";
 
@@ -39,7 +43,7 @@ public class ChatBotController {
     public KakaoResponse handleRequestFromKakao(@RequestBody KakaoRequest request) {
 
         log.info("요청 데이터 : " + request.getUserRequest().getUtterance());
-        String translatedText = new TranslatorKoToEn(clientId, clientSecret).translateToEnglish(request.getUserRequest().getUtterance());
+        String translatedText = translatorKoToEn.translateToEnglish(request.getUserRequest().getUtterance());
         log.info("영어로 번역된 요청 데이터 : " + translatedText);
         String chatGptResponse = sendRequestToChatGPT(translatedText);
 
@@ -74,7 +78,7 @@ public class ChatBotController {
             sb.append(text.replaceAll("\\n", ""));
         }
         log.info("GPT 응답 데이터 : " + sb.toString());
-        String translatedText = new TranslatorEnToKo(clientId, clientSecret).translateToKorean(sb.toString());
+        String translatedText = new TranslatorEnToKo().translateToKorean(sb.toString());
         log.info("한국어로 번역된 응답 데이터 : " + translatedText);
 
         return translatedText;

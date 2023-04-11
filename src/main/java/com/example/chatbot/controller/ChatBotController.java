@@ -2,9 +2,7 @@ package com.example.chatbot.controller;
 
 import com.example.chatbot.kakao.KakaoRequest;
 import com.example.chatbot.kakao.KakaoResponse;
-import com.example.chatbot.kakao.KakaoResponseContent;
-import com.example.translation.TranslatorEnToKo;
-import com.example.translation.TranslatorKoToEn;
+import com.example.chatbot.kakao.KakaoTemplate;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,16 +37,18 @@ public class ChatBotController {
     public KakaoResponse handleRequestFromKakao(@RequestBody KakaoRequest request) {
 
         log.info("요청 데이터 : " + request.getUserRequest().getUtterance());
-        String translatedText = new TranslatorKoToEn(clientId, clientSecret).translateToEnglish(request.getUserRequest().getUtterance());
-        log.info("영어로 번역된 요청 데이터 : " + translatedText);
-        String chatGptResponse = sendRequestToChatGPT(translatedText);
+        String chatGptResponse = sendRequestToChatGPT(request.getUserRequest().getUtterance());
 
-        KakaoResponse response = new KakaoResponse();
-        List<KakaoResponseContent> contents = new ArrayList<>();
-        contents.add(new KakaoResponseContent("text", chatGptResponse));
-        response.setContents(contents);
+        List<KakaoTemplate> contents = new ArrayList<>();
+
+        KakaoTemplate template = new KakaoTemplate();
+        KakaoResponse response = new KakaoResponse(template);
+        template.addSimpleTextOutput(chatGptResponse);
+        contents.add(template);
+
         return response;
     }
+
 
 
     private String sendRequestToChatGPT(String message) {
@@ -74,10 +74,10 @@ public class ChatBotController {
             sb.append(text.replaceAll("\\n", ""));
         }
         log.info("GPT 응답 데이터 : " + sb.toString());
-        String translatedText = new TranslatorEnToKo(clientId, clientSecret).translateToKorean(sb.toString());
-        log.info("한국어로 번역된 응답 데이터 : " + translatedText);
+        //String translatedText = new TranslatorEnToKo(clientId, clientSecret).translateToKorean(sb.toString());
+        //log.info("한국어로 번역된 응답 데이터 : " + translatedText);
 
-        return translatedText;
+        return sb.toString();
     }
 
 }

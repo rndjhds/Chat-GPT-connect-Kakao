@@ -5,17 +5,16 @@ import java.util.List;
 
 public class KakaoResponse {
 
-    private List<KakaoResponseContent> contents;
+    private final String version;
+    private final KakaoTemplate template;
 
-    public KakaoResponse() {
-        this.contents = new ArrayList<>();
+    public KakaoResponse(KakaoTemplate template) {
+        this.version = "2.0";
+        this.template = template;
     }
 
-    public void setContents(List<KakaoResponseContent> contents) {
-        this.contents = contents;
+    public KakaoTemplate getTemplate() {
+        return template;
     }
 
-    public List<KakaoResponseContent> getContents() {
-        return contents;
-    }
 }

@@ -5,7 +5,7 @@ import java.util.Map;
 public class Action {
 
     private String name;
-    private String clientExtra;
+    private Object clientExtra;
     private Map<String, Object> params;
     private String id;
     private Map<String, Object> detailParams;
@@ -18,11 +18,11 @@ public class Action {
         this.name = name;
     }
 
-    public String getClientExtra() {
+    public Object getClientExtra() {
         return clientExtra;
     }
 
-    public void setClientExtra(String clientExtra) {
+    public void setClientExtra(Object clientExtra) {
         this.clientExtra = clientExtra;
     }
 

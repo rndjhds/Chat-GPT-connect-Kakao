@@ -17,4 +17,7 @@ public class KakaoResponse {
         return template;
     }
 
+    public String getVersion() {
+        return version;
+    }
 }

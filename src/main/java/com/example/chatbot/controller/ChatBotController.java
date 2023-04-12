@@ -25,11 +25,11 @@ public class ChatBotController {
     @Value("${open_ai_key}")
     private String openAiKey;
 
-    @Value("${translator_client_id}")
-    private String clientId;
-
-    @Value("${translator_client_secret}")
-    private String clientSecret;
+//    @Value("${translator_client_id}")
+//    private String clientId;
+//
+//    @Value("${translator_client_secret}")
+//    private String clientSecret;
 
     private static final String CHATGPT_API_URL = "https://api.openai.com/v1/completions";
 
@@ -42,11 +42,10 @@ public class ChatBotController {
         List<KakaoTemplate> contents = new ArrayList<>();
 
         KakaoTemplate template = new KakaoTemplate();
-        KakaoResponse response = new KakaoResponse(template);
         template.addSimpleTextOutput(chatGptResponse);
         contents.add(template);
 
-        return response;
+        return new KakaoResponse(template);
     }
 
 

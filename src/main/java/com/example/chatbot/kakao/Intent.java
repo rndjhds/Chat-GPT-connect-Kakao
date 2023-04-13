@@ -5,6 +5,14 @@ public class Intent {
     private String id;
     private String name;
 
+    @Override
+    public String toString() {
+        return "Intent{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public String getId() {
         return id;
     }

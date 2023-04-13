@@ -10,6 +10,18 @@ public class UserRequest {
     private String lang;
     private User user;
 
+    @Override
+    public String toString() {
+        return "UserRequest{" +
+                "timezone='" + timezone + '\'' +
+                ", params=" + params +
+                ", block=" + block +
+                ", utterance='" + utterance + '\'' +
+                ", lang='" + lang + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
     public String getTimezone() {
         return timezone;
     }

@@ -3,11 +3,16 @@ package com.example.chatbot.controller;
 import com.example.chatbot.kakao.KakaoRequest;
 import com.example.chatbot.kakao.KakaoResponse;
 import com.example.chatbot.kakao.KakaoTemplate;
+import com.example.chatbot.service.ChatBotService;
+import com.example.chatbot.service.KakaoService;
+import com.example.translation.TranslatorEnToKo;
+import com.example.translation.TranslatorKoToEn;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,22 +27,24 @@ import java.util.List;
 @Slf4j
 public class ChatBotController {
 
-    @Value("${open_ai_key}")
+/*    @Value("${open_ai_key}")
     private String openAiKey;
 
-//    @Value("${translator_client_id}")
-//    private String clientId;
-//
-//    @Value("${translator_client_secret}")
-//    private String clientSecret;
+    @Value("${translator_client_id}")
+    private String clientId;
 
-    private static final String CHATGPT_API_URL = "https://api.openai.com/v1/completions";
+    @Value("${translator_client_secret}")
+    private String clientSecret;
 
-    @PostMapping(value = "/chatbot", produces = MediaType.APPLICATION_JSON_VALUE)
+    private static final String CHATGPT_API_URL = "https://api.openai.com/v1/completions";*/
+
+    /*@PostMapping(value = "/chatbot", produces = MediaType.APPLICATION_JSON_VALUE)
     public KakaoResponse handleRequestFromKakao(@RequestBody KakaoRequest request) {
 
         log.info("요청 데이터 : " + request.getUserRequest().getUtterance());
-        String chatGptResponse = sendRequestToChatGPT(request.getUserRequest().getUtterance());
+        String translatedText = new TranslatorKoToEn(clientId, clientSecret).translateToEnglish(request.getUserRequest().getUtterance());
+        log.info("영어로 번역된 요청 데이터 : " + translatedText);
+        String chatGptResponse = sendRequestToChatGPT(translatedText);
 
         List<KakaoTemplate> contents = new ArrayList<>();
 
@@ -46,11 +53,28 @@ public class ChatBotController {
         contents.add(template);
 
         return new KakaoResponse(template);
+    }*/
+
+    private final KakaoService kakaoService;
+
+    public ChatBotController(KakaoService kakaoService) {
+        this.kakaoService = kakaoService;
+    }
+
+
+    @PostMapping(value = "/chatbot", produces = MediaType.APPLICATION_JSON_VALUE)
+    public KakaoResponse handleRequestFromKakao(@RequestBody KakaoRequest kakaoRequest) {
+
+        log.info("kakaoRequest data = {}", kakaoRequest.toString());
+
+        KakaoResponse kakaoResponse = kakaoService.send(kakaoRequest);
+        // KakaoResponse 클래스를 리턴한 값.
+        return kakaoResponse;
     }
 
 
 
-    private String sendRequestToChatGPT(String message) {
+/*    private String sendRequestToChatGPT(String message) {
         String model = "text-davinci-002";
 
         RestTemplate restTemplate = new RestTemplate();
@@ -73,10 +97,10 @@ public class ChatBotController {
             sb.append(text.replaceAll("\\n", ""));
         }
         log.info("GPT 응답 데이터 : " + sb.toString());
-        //String translatedText = new TranslatorEnToKo(clientId, clientSecret).translateToKorean(sb.toString());
-        //log.info("한국어로 번역된 응답 데이터 : " + translatedText);
+        String translatedText = new TranslatorEnToKo(clientId, clientSecret).translateToKorean(sb.toString());
+        log.info("한국어로 번역된 응답 데이터 : " + translatedText);
 
-        return sb.toString();
-    }
+        return translatedText;
+    }*/
 
 }

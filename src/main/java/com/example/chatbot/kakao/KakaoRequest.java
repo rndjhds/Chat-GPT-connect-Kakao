@@ -10,6 +10,17 @@ public class KakaoRequest {
     private Bot bot;
     private Action action;
 
+    @Override
+    public String toString() {
+        return "KakaoRequest{" +
+                "intent=" + intent +
+                ", userRequest=" + userRequest +
+                ", contexts=" + contexts +
+                ", bot=" + bot +
+                ", action=" + action +
+                '}';
+    }
+
     public Intent getIntent() {
         return intent;
     }

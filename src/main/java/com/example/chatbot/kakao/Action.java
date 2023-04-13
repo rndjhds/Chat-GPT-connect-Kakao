@@ -10,6 +10,17 @@ public class Action {
     private String id;
     private Map<String, Object> detailParams;
 
+    @Override
+    public String toString() {
+        return "Action{" +
+                "name='" + name + '\'' +
+                ", clientExtra=" + clientExtra +
+                ", params=" + params +
+                ", id='" + id + '\'' +
+                ", detailParams=" + detailParams +
+                '}';
+    }
+
     public String getName() {
         return name;
     }

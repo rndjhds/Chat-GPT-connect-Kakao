@@ -2,21 +2,21 @@ package com.example.translation;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.springframework.http.*;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.StandardCharsets;
 
-@Component
 public class TranslatorKoToEn {
 
     private static final String PAPAGO_API_URL = "https://openapi.naver.com/v1/papago/n2mt";
 
-    private final String clientId;
+    private String clientId;
 
-    private final String clientSecret;
+    private String clientSecret;
 
     public TranslatorKoToEn(String clientId, String clientSecret) {
         this.clientId = clientId;
@@ -24,12 +24,9 @@ public class TranslatorKoToEn {
     }
 
     public String translateToEnglish(String text) {
-        String requestUrl = UriComponentsBuilder.fromHttpUrl(PAPAGO_API_URL)
-                .queryParam("source", "ko")
-                .queryParam("target", "en")
-                .queryParam("text", text)
-                .build()
-                .toUriString();
+        byte[] encodedTextBytes = text.getBytes(StandardCharsets.UTF_8);
+        String encodedText = new String(encodedTextBytes, StandardCharsets.UTF_8);
+        String requestUrl = PAPAGO_API_URL + "?source=ko&target=en&text=" + encodedText;
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -37,14 +34,15 @@ public class TranslatorKoToEn {
         headers.set("X-Naver-Client-Id", clientId);
         headers.set("X-Naver-Client-Secret", clientSecret);
 
-        HttpEntity<?> request = new HttpEntity<>(null, headers);
+        HttpEntity<String> request = new HttpEntity<>("", headers);
         ResponseEntity<String> response = restTemplate.exchange(requestUrl, HttpMethod.POST, request, String.class);
 
         String responseBody = response.getBody();
-        JsonParser parser = new JsonParser();
-        JsonObject jsonObject = parser.parse(responseBody).getAsJsonObject();
+        JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
         String translatedText = jsonObject.getAsJsonObject("message").getAsJsonObject("result").get("translatedText").getAsString();
 
-        return new String(translatedText.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+        String decodedText = new String(translatedText.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+
+        return decodedText;
     }
 }

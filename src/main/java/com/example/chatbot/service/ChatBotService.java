@@ -26,7 +26,7 @@ public class ChatBotService {
     public String giveBackFromGpt(String message) {
 
         return createContent(parsingBody(createResponseBody(stringResponseEntity(CHATGPT_API_URL,createEntity(
-                createBody(message), createHeader(openAiKey, APPLICATION_JSON))))));
+                createBody(message), createHeader(APPLICATION_JSON))))));
 
     }
 
@@ -68,20 +68,20 @@ public class ChatBotService {
     }
 
     public String createBody(String text) {
-
+        // memory의 데이터들
         return "{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"" + text + "\"}]}";
     }
 
-    public HttpHeaders createHeader(String key, MediaType mediaType) {
+    public HttpHeaders createHeader(MediaType mediaType) {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(key);
+        headers.setBearerAuth(openAiKey);
         headers.setContentType(mediaType);
 
         return headers;
     }
 
-    /*private String sendRequestToChatGPT(String message) {
+/*    private String sendRequestToChatGPT(String message) {
         String model = "text-davinci-002";
 
         RestTemplate restTemplate = new RestTemplate();

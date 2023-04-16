@@ -15,20 +15,15 @@ public class KakaoService {
 
     private final ChatBotService chatBotService;
 
-    public KakaoService(ChatBotService chatBotService) {
+    public KakaoService(final ChatBotService chatBotService) {
         this.chatBotService = chatBotService;
     }
 
-    public KakaoResponse send(KakaoRequest kakaoRequest) {
-
-        return createKakaoResponse(sendRequestToChatGPT(createUtterance(kakaoRequest)));
-    }
-
-    public KakaoResponse createKakaoResponse(String text) {
+    public KakaoResponse send(final KakaoRequest kakaoRequest) {
 
         List<KakaoTemplate> contents = new ArrayList<>();
-
         KakaoTemplate template = new KakaoTemplate();
+        String text = this.sendRequestToChatGPT(createUtterance(kakaoRequest));
         template.addSimpleTextOutput(text);
         contents.add(template);
 
@@ -42,6 +37,7 @@ public class KakaoService {
 
     public String sendRequestToChatGPT(String utterance) {
 
-        return chatBotService.giveBackFromGpt(utterance);
+        return chatBotService.sendRequestToChatGPT(utterance);
     }
+
 }

@@ -18,7 +18,7 @@ public class KakaoController {
         this.kakaoService = kakaoService;
     }
 
-    @PostMapping(value = {"/chatbot"}, produces = {"application/json"})
+    @PostMapping("/chatbot")
     public KakaoResponse createKakaoResponse(@RequestBody KakaoRequest kakaoRequest) {
 
         log.info("kakaoRequest data = {}", kakaoRequest.toString());

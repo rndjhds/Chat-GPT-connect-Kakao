@@ -4,11 +4,11 @@ import java.util.List;
 
 public class KakaoRequest {
 
-    private Intent intent;
-    private UserRequest userRequest;
+    private KakaoIntent intent;
+    private KakaoUserRequest userRequest;
     private List<Object> contexts;
-    private Bot bot;
-    private Action action;
+    private KakaoBot bot;
+    private KakaoAction action;
 
     @Override
     public String toString() {
@@ -21,20 +21,20 @@ public class KakaoRequest {
                 '}';
     }
 
-    public Intent getIntent() {
+    public KakaoIntent getIntent() {
         return intent;
     }
 
-    public void setIntent(Intent intent) {
-        this.intent = intent;
+    public void setIntent(KakaoIntent kakaoIntent) {
+        this.intent = kakaoIntent;
     }
 
-    public UserRequest getUserRequest() {
+    public KakaoUserRequest getUserRequest() {
         return userRequest;
     }
 
-    public void setUserRequest(UserRequest userRequest) {
-        this.userRequest = userRequest;
+    public void setUserRequest(KakaoUserRequest kakaoUserRequest) {
+        this.userRequest = kakaoUserRequest;
     }
 
     public List<Object> getContexts() {
@@ -45,20 +45,20 @@ public class KakaoRequest {
         this.contexts = contexts;
     }
 
-    public Bot getBot() {
+    public KakaoBot getBot() {
         return bot;
     }
 
-    public void setBot(Bot bot) {
-        this.bot = bot;
+    public void setBot(KakaoBot kakaoBot) {
+        this.bot = kakaoBot;
     }
 
-    public Action getAction() {
+    public KakaoAction getAction() {
         return action;
     }
 
-    public void setAction(Action action) {
-        this.action = action;
+    public void setAction(KakaoAction kakaoAction) {
+        this.action = kakaoAction;
     }
 
 }

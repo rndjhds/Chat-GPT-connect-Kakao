@@ -1,6 +1,6 @@
 package com.example.chatbot.kakao;
 
-public class Intent {
+public class KakaoIntent {
 
     private String id;
     private String name;

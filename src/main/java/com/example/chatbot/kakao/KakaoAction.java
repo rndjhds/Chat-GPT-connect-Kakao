@@ -2,7 +2,7 @@ package com.example.chatbot.kakao;
 
 import java.util.Map;
 
-public class Action {
+public class KakaoAction {
 
     private String name;
     private Object clientExtra;

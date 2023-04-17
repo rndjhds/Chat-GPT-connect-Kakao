@@ -13,18 +13,18 @@ import java.util.List;
 @Slf4j
 public class KakaoService {
 
-    private final ChatBotService chatBotService;
+    private final ChatService chatService;
 
-    public KakaoService(final ChatBotService chatBotService) {
-        this.chatBotService = chatBotService;
+    public KakaoService(ChatService chatService) {
+        this.chatService = chatService;
     }
 
-    public KakaoResponse send(final KakaoRequest kakaoRequest) {
+    public KakaoResponse createKakaoResponse(KakaoRequest kakaoRequest) {
 
         List<KakaoTemplate> contents = new ArrayList<>();
         KakaoTemplate template = new KakaoTemplate();
-        String text = this.sendRequestToChatGPT(createUtterance(kakaoRequest));
-        template.addSimpleTextOutput(text);
+        String simpleText = loadSimpleTextByUtterance(createUtterance(kakaoRequest));
+        template.addSimpleTextOutput(simpleText);
         contents.add(template);
 
         return new KakaoResponse(template);
@@ -35,9 +35,9 @@ public class KakaoService {
         return kakaoRequest.getUserRequest().getUtterance();
     }
 
-    public String sendRequestToChatGPT(String utterance) {
+    public String loadSimpleTextByUtterance(String utterance) {
 
-        return chatBotService.sendRequestToChatGPT(utterance);
+        return chatService.createSimpleTextBytext(utterance);
     }
 
 }

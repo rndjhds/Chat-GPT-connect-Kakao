@@ -2,7 +2,7 @@ package com.example.chatbot.kakao;
 
 import java.util.Map;
 
-public class User {
+public class KakaoUser {
     private String id;
     private String type;
     private Map<String, String> properties;

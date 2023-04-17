@@ -10,19 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-public class ChatBotController {
+public class KakaoController {
 
     private final KakaoService kakaoService;
 
-    public ChatBotController(final KakaoService kakaoService) {
+    public KakaoController(KakaoService kakaoService) {
         this.kakaoService = kakaoService;
     }
 
-    @PostMapping(value = { "/chatbot" }, produces = { "application/json" })
-    public KakaoResponse handleRequestFromKakao(@RequestBody final KakaoRequest kakaoRequest) {
+    @PostMapping(value = {"/chatbot"}, produces = {"application/json"})
+    public KakaoResponse createKakaoResponse(@RequestBody KakaoRequest kakaoRequest) {
 
-        ChatBotController.log.info("kakaoRequest data = {}", kakaoRequest.toString());
-        final KakaoResponse kakaoResponse = this.kakaoService.send(kakaoRequest);
+        log.info("kakaoRequest data = {}", kakaoRequest.toString());
+
+        KakaoResponse kakaoResponse = kakaoService.createKakaoResponse(kakaoRequest);
 
         return kakaoResponse;
     }

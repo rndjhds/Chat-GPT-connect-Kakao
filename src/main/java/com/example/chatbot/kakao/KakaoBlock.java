@@ -1,6 +1,6 @@
 package com.example.chatbot.kakao;
 
-public class Block {
+public class KakaoBlock {
 
     private String id;
     private String name;

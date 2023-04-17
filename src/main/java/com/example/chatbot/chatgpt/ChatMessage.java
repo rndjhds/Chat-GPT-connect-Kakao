@@ -1,15 +1,15 @@
-package com.example.chatbot.gpt;
+package com.example.chatbot.chatgpt;
 
-public class Message {
+public class ChatMessage {
     private String role;
     private String content;
 
-    public Message(String role, String content) {
+    public ChatMessage(String role, String content) {
         this.role = role;
         this.content = content;
     }
 
-    public Message() {
+    public ChatMessage() {
     }
 
     public String getRole() {

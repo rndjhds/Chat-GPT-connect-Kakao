@@ -7,7 +7,7 @@ public class KakaoUserRequest {
     private Map<String, Object> params;
     private KakaoBlock block;
     private String utterance;
-    private String lang;
+    private String lang = "kr";
     private KakaoUser user;
 
     @Override
@@ -58,9 +58,9 @@ public class KakaoUserRequest {
         return lang;
     }
 
-    public void setLang(String lang) {
+    /*public void setLang(String lang) {
         this.lang = lang;
-    }
+    }*/
 
     public KakaoUser getUser() {
         return user;

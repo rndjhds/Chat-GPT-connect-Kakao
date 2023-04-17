@@ -23,7 +23,7 @@ public class KakaoUser {
         this.type = type;
     }
 
-    public Map<String, String> getProperties() {
+    public Object getProperties() {
         return properties;
     }
 

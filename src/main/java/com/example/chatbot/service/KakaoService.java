@@ -21,18 +21,15 @@ public class KakaoService {
 
     public KakaoResponse send(KakaoRequest kakaoRequest) {
 
-        return createKakaoResponse(sendRequestToChatGPT(createUtterance(kakaoRequest)));
-    }
-
-    public KakaoResponse createKakaoResponse(String text) {
-
         List<KakaoTemplate> contents = new ArrayList<>();
 
         KakaoTemplate template = new KakaoTemplate();
+        String text = sendRequestToChatGPT(createUtterance(kakaoRequest));
         template.addSimpleTextOutput(text);
         contents.add(template);
 
         return new KakaoResponse(template);
+
     }
 
     public String createUtterance(KakaoRequest kakaoRequest) {
@@ -42,6 +39,6 @@ public class KakaoService {
 
     public String sendRequestToChatGPT(String utterance) {
 
-        return chatBotService.giveBackFromGpt(utterance);
+        return chatBotService.sendRequestToChatGPT(utterance);
     }
 }

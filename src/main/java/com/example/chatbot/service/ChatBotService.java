@@ -1,5 +1,6 @@
 package com.example.chatbot.service;
 
+import com.example.translation.ConvertLanguage;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Service
 @Slf4j
@@ -20,77 +18,29 @@ public class ChatBotService {
     @Value("${open_ai_key}")
     private String openAiKey;
 
+    @Value("${translator_client_id}")
+    private String clientId;
+
+    @Value("${translator_client_secret}")
+    private String clientSecret;
+
     private static final String CHATGPT_API_URL = "https://api.openai.com/v1/chat/completions";
 
-    // 응답에서 필요한 데이터만 리터
-    public String giveBackFromGpt(String message) {
+    public String sendRequestToChatGPT(String message) {
 
-        return createContent(parsingBody(createResponseBody(stringResponseEntity(CHATGPT_API_URL,createEntity(
-                createBody(message), createHeader(APPLICATION_JSON))))));
+        //String translateToEnglish = new ConvertLanguage(clientId, clientSecret).convertToLanguage(message,"ko", "en");
+        ResponseEntity<String> response = forwardToGPT(message);
 
-    }
+        StringBuilder sb = receiveFromGpt(response);
 
-    public String createContent(JsonArray jsonArray) {
-
-        StringBuilder sb = new StringBuilder();
-        for (JsonElement element : jsonArray) {
-            JsonElement gptResponseMessage = element.getAsJsonObject().get("message");
-            String text = gptResponseMessage.getAsJsonObject().get("content").getAsString();
-            sb.append(text.replaceAll("\\n", ""));
-        }
+        //String translatedText = new ConvertLanguage(clientId, clientSecret).convertToLanguage(sb.toString(),"en", "ko");
+        log.info("GPT 응답 데이터 : " + sb.toString());
+        //log.info("한국어로 번역된 응답 데이터 : " + translatedText);
 
         return sb.toString();
     }
 
-    public JsonArray parsingBody(String body) {
-
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jsonObject = jsonParser.parse(body).getAsJsonObject();
-
-        return jsonObject.getAsJsonArray("choices");
-    }
-
-    public String createResponseBody(ResponseEntity<String> responseEntity) {
-
-        return responseEntity.getBody();
-    }
-
-    public ResponseEntity<String> stringResponseEntity(String URL, HttpEntity<String> httpEntity) {
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        return restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
-    }
-
-    public HttpEntity<String> createEntity(String body, MultiValueMap<String, String> header) {
-
-        return new HttpEntity<>(body, header);
-    }
-
-    public String createBody(String text) {
-        // memory의 데이터들
-        return "{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"" + text + "\"}]}";
-    }
-
-    public HttpHeaders createHeader(MediaType mediaType) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(openAiKey);
-        headers.setContentType(mediaType);
-
-        return headers;
-    }
-
-/*    private String sendRequestToChatGPT(String message) {
-        String model = "text-davinci-002";
-
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(openAiKey);
-        headers.set("Content-Type", "application/json");
-        String body = "{\"model\": \"" + model + "\",\"prompt\": \"" + message + "\", \"max_tokens\":128}";
-        HttpEntity<String> request = new HttpEntity<>(body, headers);
-        ResponseEntity<String> response = restTemplate.exchange(CHATGPT_API_URL, HttpMethod.POST, request, String.class);
+    private static StringBuilder receiveFromGpt(ResponseEntity<String> response) {
 
         String responseBody = response.getBody();
 
@@ -100,13 +50,24 @@ public class ChatBotService {
 
         StringBuilder sb = new StringBuilder();
         for (JsonElement element : choicesArray) {
-            String text = element.getAsJsonObject().get("text").getAsString();
+            JsonElement gptResponseMessage = element.getAsJsonObject().get("message");
+            String text = gptResponseMessage.getAsJsonObject().get("content").getAsString();
             sb.append(text.replaceAll("\\n", ""));
         }
-        log.info("GPT 응답 데이터 : " + sb.toString());
-        String translatedText = new TranslatorEnToKo(clientId, clientSecret).translateToKorean(sb.toString());
-        log.info("한국어로 번역된 응답 데이터 : " + translatedText);
 
-        return translatedText;
-    }*/
+        return sb;
+    }
+
+    private ResponseEntity<String> forwardToGPT(String message) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(openAiKey);
+        headers.set("Content-Type", "application/json");
+        String body = "{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"" + message + "\"}]}";
+        HttpEntity<String> request = new HttpEntity<>(body, headers);
+        ResponseEntity<String> response = restTemplate.exchange(CHATGPT_API_URL, HttpMethod.POST, request, String.class);
+
+        return response;
+    }
 }

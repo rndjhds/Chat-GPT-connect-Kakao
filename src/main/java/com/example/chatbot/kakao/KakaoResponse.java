@@ -17,4 +17,12 @@ public class KakaoResponse {
     public String getVersion() {
         return version;
     }
+
+    @Override
+    public String toString() {
+        return "KakaoResponse{" +
+                "version='" + version + '\'' +
+                ", template=" + template +
+                '}';
+    }
 }

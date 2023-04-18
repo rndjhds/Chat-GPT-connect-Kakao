@@ -18,4 +18,10 @@ public class KakaoTemplate {
         this.outputs.add(new KakaoOutput(new KakaoSimpleText(text)));
     }
 
+    @Override
+    public String toString() {
+        return "KakaoTemplate{" +
+                "outputs=" + outputs +
+                '}';
+    }
 }

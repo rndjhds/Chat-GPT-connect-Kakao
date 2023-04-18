@@ -36,16 +36,18 @@ public class ChatService {
 
     private static final String CHATGPT_API_URL = "https://api.openai.com/v1/chat/completions";
 
-    public String createSimpleTextBytext(String text) {
+    public String  createSimpleTextBytext(String text) {
 
         String translatedToEnglish = translateTargetBySource(text, "ko", "en");
+        log.info("GPT TranslationEnglish {}", translatedToEnglish);
 
         ResponseEntity<String> response = forwardToGPT(translatedToEnglish);
         String receiveFromGpt = receiveFromGpt(response);
 
-        log.info("GPT 응답 데이터 : " + receiveFromGpt);
+        log.info("GPT 응답 데이터 : {}", receiveFromGpt);
 
         String translatedToKorean = translateTargetBySource(receiveFromGpt, "en", "ko");
+        log.info("GPT TranslationToKorean : {}", translatedToKorean);
 
         return translatedToKorean;
     }

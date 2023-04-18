@@ -10,4 +10,11 @@ public class KakaoOutput {
     public KakaoSimpleText getSimpleText() {
         return simpleText;
     }
+
+    @Override
+    public String toString() {
+        return "KakaoOutput{" +
+                "simpleText=" + simpleText +
+                '}';
+    }
 }

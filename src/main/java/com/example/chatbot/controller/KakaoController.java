@@ -2,11 +2,15 @@ package com.example.chatbot.controller;
 
 import com.example.chatbot.kakao.KakaoRequest;
 import com.example.chatbot.kakao.KakaoResponse;
+import com.example.chatbot.kakao.KakaoTemplate;
 import com.example.chatbot.service.KakaoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -24,6 +28,9 @@ public class KakaoController {
         log.info("kakaoRequest data = {}", kakaoRequest.toString());
 
         KakaoResponse kakaoResponse = kakaoService.createKakaoResponse(kakaoRequest);
+
+        log.info("KakaoResponse data = {}", kakaoResponse.getTemplate().getOutputs().get(0).getSimpleText());
+        log.info("kakaoResponse data sibal = {}", kakaoResponse.toString());
 
         return kakaoResponse;
     }

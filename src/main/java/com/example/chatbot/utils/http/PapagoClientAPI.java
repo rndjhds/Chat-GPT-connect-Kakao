@@ -19,16 +19,18 @@ public class PapagoClientAPI implements ClientAPI {
 
     @Value("${papago.client_id}")
     private String clientId;
+
     @Value("${papago.client_secret}")
     private String clientSecret;
 
-    private static final String PAPAGO_API_URL = "https://openapi.naver.com/v1/papago/n2mt";
+    @Value("${papago.url}")
+    private String papagoApiUrl;
 
     public String translateTargetBySource(String text, String originalLanguage, String translationLanguage) {
 
         String encodedText = encodeText(text);
 
-        String requestUrl = PAPAGO_API_URL + "?source=" + originalLanguage + "&target=" + translationLanguage + "&text=" + encodedText;
+        String requestUrl = papagoApiUrl + "?source=" + originalLanguage + "&target=" + translationLanguage + "&text=" + encodedText;
         String translatedText = receiveFromAPI(requestUrl);
 
         String decodedText = decodeText(translatedText);

@@ -1,7 +1,4 @@
-package com.example.chatbot.kakao;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.example.chatbot.kakao.model;
 
 public class KakaoResponse {
 
@@ -19,5 +16,13 @@ public class KakaoResponse {
 
     public String getVersion() {
         return version;
+    }
+
+    @Override
+    public String toString() {
+        return "KakaoResponse{" +
+                "version='" + version + '\'' +
+                ", template=" + template +
+                '}';
     }
 }

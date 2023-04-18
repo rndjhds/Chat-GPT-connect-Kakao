@@ -1,8 +1,8 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
 import java.util.Map;
 
-public class Action {
+public class KakaoAction {
 
     private String name;
     private Object clientExtra;

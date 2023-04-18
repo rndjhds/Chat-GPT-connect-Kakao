@@ -1,11 +1,20 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
 import java.util.Map;
 
-public class User {
+public class KakaoUser {
     private String id;
     private String type;
     private Map<String, String> properties;
+
+    @Override
+    public String toString() {
+        return "KakaoUser{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", properties=" + properties +
+                '}';
+    }
 
     public String getId() {
         return id;
@@ -23,7 +32,7 @@ public class User {
         this.type = type;
     }
 
-    public Map<String, String> getProperties() {
+    public Object getProperties() {
         return properties;
     }
 

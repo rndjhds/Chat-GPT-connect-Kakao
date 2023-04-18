@@ -1,4 +1,4 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,4 +18,10 @@ public class KakaoTemplate {
         this.outputs.add(new KakaoOutput(new KakaoSimpleText(text)));
     }
 
+    @Override
+    public String toString() {
+        return "KakaoTemplate{" +
+                "outputs=" + outputs +
+                '}';
+    }
 }

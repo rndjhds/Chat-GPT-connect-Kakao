@@ -1,13 +1,13 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
-public class Bot {
+public class KakaoIntent {
 
     private String id;
     private String name;
 
     @Override
     public String toString() {
-        return "Bot{" +
+        return "Intent{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

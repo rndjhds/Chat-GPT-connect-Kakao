@@ -1,4 +1,4 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
 public class KakaoOutput {
     private final KakaoSimpleText simpleText;
@@ -9,5 +9,12 @@ public class KakaoOutput {
 
     public KakaoSimpleText getSimpleText() {
         return simpleText;
+    }
+
+    @Override
+    public String toString() {
+        return "KakaoOutput{" +
+                "simpleText=" + simpleText +
+                '}';
     }
 }

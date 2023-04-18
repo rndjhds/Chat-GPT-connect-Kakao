@@ -73,19 +73,19 @@ public class PapagoClientAPI implements ClientAPI {
     }
 
     @Override
-    public String forwardToAPI(String body) {
+    public String forwardToAPI(String requestUrl) {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> httpEntity = createHttpEntity("");
-        ResponseEntity<String> responseEntity = restTemplate.exchange(body, HttpMethod.POST, httpEntity, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(requestUrl, HttpMethod.POST, httpEntity, String.class);
 
         return responseEntity.getBody();
     }
 
     @Override
-    public String receiveFromAPI(String response) {
+    public String receiveFromAPI(String requestUrl) {
 
-        String responseBody = forwardToAPI(response);
+        String responseBody = forwardToAPI(requestUrl);
         JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
         JsonObject messageObject = jsonObject.getAsJsonObject("message");
         String translatedText = messageObject.getAsJsonObject("result").get("translatedText").getAsString();

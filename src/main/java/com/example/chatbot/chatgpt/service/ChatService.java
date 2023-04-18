@@ -32,7 +32,6 @@ public class ChatService {
 
         String translatedToEnglish = papagoClientAPI.translateTargetBySource(text, "ko", "en");
         log.info("TranslationEnglish {}", translatedToEnglish);
-
         add("user", translatedToEnglish);
 
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.create("gpt-3.5-turbo", chatMessageRepository);

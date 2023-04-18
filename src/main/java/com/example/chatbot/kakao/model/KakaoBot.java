@@ -1,9 +1,17 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
-public class KakaoBlock {
+public class KakaoBot {
 
     private String id;
     private String name;
+
+    @Override
+    public String toString() {
+        return "Bot{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 
     public String getId() {
         return id;

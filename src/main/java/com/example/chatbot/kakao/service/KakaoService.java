@@ -1,8 +1,9 @@
-package com.example.chatbot.service;
+package com.example.chatbot.kakao.service;
 
-import com.example.chatbot.kakao.KakaoRequest;
-import com.example.chatbot.kakao.KakaoResponse;
-import com.example.chatbot.kakao.KakaoTemplate;
+import com.example.chatbot.kakao.model.KakaoRequest;
+import com.example.chatbot.kakao.model.KakaoResponse;
+import com.example.chatbot.kakao.model.KakaoTemplate;
+import com.example.chatbot.chatgpt.service.ChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

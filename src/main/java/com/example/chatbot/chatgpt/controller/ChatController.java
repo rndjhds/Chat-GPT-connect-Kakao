@@ -1,24 +1,20 @@
-package com.example.chatbot.controller;
+package com.example.chatbot.chatgpt.controller;
 
-import com.example.chatbot.kakao.KakaoRequest;
-import com.example.chatbot.kakao.KakaoResponse;
-import com.example.chatbot.kakao.KakaoTemplate;
-import com.example.chatbot.service.KakaoService;
+import com.example.chatbot.kakao.model.KakaoRequest;
+import com.example.chatbot.kakao.model.KakaoResponse;
+import com.example.chatbot.kakao.service.KakaoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @Slf4j
-public class KakaoController {
+public class ChatController {
 
     private final KakaoService kakaoService;
 
-    public KakaoController(KakaoService kakaoService) {
+    public ChatController(KakaoService kakaoService) {
         this.kakaoService = kakaoService;
     }
 

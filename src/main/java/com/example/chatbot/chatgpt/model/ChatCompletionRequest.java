@@ -1,6 +1,6 @@
-package com.example.chatbot.chatgpt;
+package com.example.chatbot.chatgpt.model;
 
-import com.example.chatbot.repository.ChatMessageRepository;
+import com.example.chatbot.chatgpt.repository.ChatMessageRepository;
 import com.google.gson.Gson;
 
 import java.util.List;

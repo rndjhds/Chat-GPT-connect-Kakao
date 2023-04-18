@@ -1,4 +1,4 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
 public class KakaoResponse {
 

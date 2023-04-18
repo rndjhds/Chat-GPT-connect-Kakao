@@ -1,6 +1,6 @@
-package com.example.chatbot.repository;
+package com.example.chatbot.chatgpt.repository;
 
-import com.example.chatbot.chatgpt.ChatMessage;
+import com.example.chatbot.chatgpt.model.ChatMessage;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

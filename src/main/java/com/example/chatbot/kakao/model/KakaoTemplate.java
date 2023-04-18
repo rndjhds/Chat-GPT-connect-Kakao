@@ -1,4 +1,4 @@
-package com.example.chatbot.kakao;
+package com.example.chatbot.kakao.model;
 
 import java.util.ArrayList;
 import java.util.List;

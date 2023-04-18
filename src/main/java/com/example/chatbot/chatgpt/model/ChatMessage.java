@@ -1,4 +1,4 @@
-package com.example.chatbot.chatgpt;
+package com.example.chatbot.chatgpt.model;
 
 public class ChatMessage {
     private String role;

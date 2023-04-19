@@ -40,11 +40,11 @@ public class ChatService {
 
         String response = gptClientAPI.forwardToAPI(body);
         String receiveFromGpt = gptClientAPI.receiveFromAPI(response);
-
+        add("assistant", receiveFromGpt);
         log.info("GPT 응답 데이터 : {}", receiveFromGpt);
 
         String translatedToKorean = papagoClientAPI.translateTargetBySource(receiveFromGpt, "en", "ko");
-        add("assistant", translatedToKorean);
+
         log.info("GPT TranslationToKorean : {}", translatedToKorean);
 
         return translatedToKorean;

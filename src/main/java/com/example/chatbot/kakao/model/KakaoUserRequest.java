@@ -3,18 +3,22 @@ package com.example.chatbot.kakao.model;
 import java.util.Map;
 
 public class KakaoUserRequest {
+    private String callbackUrl;
     private String timezone;
-    private Map<String, Object> params;
     private KakaoBlock block;
     private String utterance;
     private String lang;
     private KakaoUser user;
 
+    public KakaoUserRequest() {
+        this.callbackUrl = "http://54.180.81.232:8080/chatbot";
+    }
+
     @Override
     public String toString() {
-        return "UserRequest{" +
-                "timezone='" + timezone + '\'' +
-                ", params=" + params +
+        return "KakaoUserRequest{" +
+                "callbackUrl='" + callbackUrl + '\'' +
+                ", timezone='" + timezone + '\'' +
                 ", block=" + block +
                 ", utterance='" + utterance + '\'' +
                 ", lang='" + lang + '\'' +
@@ -28,14 +32,6 @@ public class KakaoUserRequest {
 
     public void setTimezone(String timezone) {
         this.timezone = timezone;
-    }
-
-    public Map<String, Object> getParams() {
-        return params;
-    }
-
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
     }
 
     public KakaoBlock getBlock() {
@@ -68,5 +64,13 @@ public class KakaoUserRequest {
 
     public void setUser(KakaoUser kakaoUser) {
         this.user = kakaoUser;
+    }
+
+    public String getCallbackUrl() {
+        return callbackUrl;
+    }
+
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
     }
 }

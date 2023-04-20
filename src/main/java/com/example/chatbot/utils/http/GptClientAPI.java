@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @ConfigurationProperties(prefix = "open")
@@ -43,14 +44,13 @@ public class GptClientAPI implements ClientAPI {
     }
 
     @Override
-    public String forwardToAPI(String body) {
-
+    public String forwardToAPI(String body) throws HttpClientErrorException {
         HttpEntity<String> request = createHttpEntity(body);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(chatGptApiUrl, HttpMethod.POST, request, String.class);
-
         return responseEntity.getBody();
     }
+
 
     @Override
     public String receiveFromAPI(String response) {

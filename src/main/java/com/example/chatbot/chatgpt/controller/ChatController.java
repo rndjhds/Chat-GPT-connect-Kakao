@@ -25,8 +25,7 @@ public class ChatController {
 
         KakaoResponse kakaoResponse = kakaoService.createKakaoResponse(kakaoRequest);
 
-        log.info("KakaoResponse data = {}", kakaoResponse.getTemplate().getOutputs().get(0).getSimpleText());
-        log.info("kakaoResponse data sibal = {}", kakaoResponse.toString());
+        log.info("kakaoResponse data = {}", kakaoResponse.toString());
 
         return kakaoResponse;
     }

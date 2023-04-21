@@ -13,15 +13,13 @@ import org.springframework.web.client.HttpClientErrorException;
 @Slf4j
 public class ChatService {
 
-    private final ChatMessageRepository chatMessageRepository;
+    private ChatMessageRepository chatMessageRepository = new ChatMessageRepository();
 
     private final GptClientAPI gptClientAPI;
 
     private final PapagoClientAPI papagoClientAPI;
 
-    public ChatService(ChatMessageRepository chatMessageRepository,
-                       GptClientAPI gptClientAPI, PapagoClientAPI papagoClientAPI) {
-        this.chatMessageRepository = chatMessageRepository;
+    public ChatService(GptClientAPI gptClientAPI, PapagoClientAPI papagoClientAPI) {
         this.gptClientAPI = gptClientAPI;
         this.papagoClientAPI = papagoClientAPI;
 

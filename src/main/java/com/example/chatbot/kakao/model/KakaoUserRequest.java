@@ -1,7 +1,5 @@
 package com.example.chatbot.kakao.model;
 
-import java.util.Map;
-
 public class KakaoUserRequest {
     private String callbackUrl;
     private String timezone;
@@ -11,7 +9,6 @@ public class KakaoUserRequest {
     private KakaoUser user;
 
     public KakaoUserRequest() {
-        this.callbackUrl = "http://54.180.81.232:8080/chatbot";
     }
 
     @Override

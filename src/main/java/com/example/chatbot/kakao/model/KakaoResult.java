@@ -1,12 +1,12 @@
 package com.example.chatbot.kakao.model;
 
-public class KakaoResponse {
+public class KakaoResult {
 
     private final String version;
     private final boolean useCallback;
     private final KakaoTemplate template;
 
-    public KakaoResponse(KakaoTemplate template) {
+    public KakaoResult(KakaoTemplate template) {
         this.version = "2.0";
         this.useCallback=true;
         this.template = template;

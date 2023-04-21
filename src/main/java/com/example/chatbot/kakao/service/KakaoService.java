@@ -1,8 +1,9 @@
 package com.example.chatbot.kakao.service;
 
 import com.example.chatbot.chatgpt.service.ChatService;
+import com.example.chatbot.kakao.model.CallBackRequest;
 import com.example.chatbot.kakao.model.KakaoRequest;
-import com.example.chatbot.kakao.model.KakaoResponse;
+import com.example.chatbot.kakao.model.KakaoResult;
 import com.example.chatbot.kakao.model.KakaoTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,15 +21,17 @@ public class KakaoService {
         this.chatService = chatService;
     }
 
-    public KakaoResponse createKakaoResponse(KakaoRequest kakaoRequest) {
+    public CallBackRequest createKakaoResponse(KakaoRequest kakaoRequest) {
 
         List<KakaoTemplate> contents = new ArrayList<>();
         KakaoTemplate template = new KakaoTemplate();
-        String simpleText = loadSimpleTextByUtterance(createUtterance(kakaoRequest));
+        String simpleText = createSimpleText(createUtterance(kakaoRequest));
         template.addSimpleTextOutput(simpleText);
         contents.add(template);
 
-        return new KakaoResponse(template);
+        KakaoResult kakaoResult = new KakaoResult(template);
+        return new CallBackRequest(kakaoResult.getVersion(), kakaoResult.getTemplate());
+
     }
 
     public String createUtterance(KakaoRequest kakaoRequest) {
@@ -36,7 +39,7 @@ public class KakaoService {
         return kakaoRequest.getUserRequest().getUtterance();
     }
 
-    public String loadSimpleTextByUtterance(String utterance) {
+    public String createSimpleText(String utterance) {
 
         return chatService.createSimpleTextBytext(utterance);
     }

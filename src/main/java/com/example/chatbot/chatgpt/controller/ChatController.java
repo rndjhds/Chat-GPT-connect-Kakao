@@ -1,12 +1,15 @@
 package com.example.chatbot.chatgpt.controller;
 
+import com.example.chatbot.kakao.model.CallBackRequest;
+import com.example.chatbot.kakao.model.CallBackResult;
 import com.example.chatbot.kakao.model.KakaoRequest;
-import com.example.chatbot.kakao.model.KakaoResponse;
+import com.example.chatbot.kakao.model.KakaoResult;
 import com.example.chatbot.kakao.service.KakaoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @Slf4j
@@ -19,14 +22,17 @@ public class ChatController {
     }
 
     @PostMapping("/chatbot")
-    public KakaoResponse createKakaoResponse(@RequestBody KakaoRequest kakaoRequest) {
+    public CallBackResult createKakaoResponse(@RequestBody KakaoRequest kakaoRequest) {
 
         log.info("kakaoRequest data = {}", kakaoRequest.toString());
 
-        KakaoResponse kakaoResponse = kakaoService.createKakaoResponse(kakaoRequest);
+        CallBackRequest callBackRequest = kakaoService.createKakaoResponse(kakaoRequest);
 
-        log.info("kakaoResponse data = {}", kakaoResponse.toString());
+        log.info("callBackRequest data = {}", callBackRequest.toString());
 
-        return kakaoResponse;
+        RestTemplate restTemplate = new RestTemplate();
+        CallBackResult callBackResult = (CallBackResult) restTemplate.postForObject(kakaoRequest.getUserRequest().getCallbackUrl(), callBackRequest, Object.class);
+
+        return callBackResult;
     }
 }

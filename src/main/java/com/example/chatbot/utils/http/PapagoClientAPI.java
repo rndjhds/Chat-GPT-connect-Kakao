@@ -28,24 +28,24 @@ public class PapagoClientAPI implements ClientAPI {
 
     public String translateTargetBySource(String text, String originalLanguage, String translationLanguage) {
 
-        String encodedText = encodeText(text);
+        String encodedText = encodingText(text);
 
         String requestUrl = papagoApiUrl + "?source=" + originalLanguage + "&target=" + translationLanguage + "&text=" + encodedText;
         String translatedText = receiveFromAPI(requestUrl);
 
-        String decodedText = decodeText(translatedText);
+        String decodedText = decodingText(translatedText);
 
         return decodedText;
     }
 
-    public String encodeText(String text) {
+    public String encodingText(String text) {
 
         String encodedText = new String(text.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
 
         return encodedText;
     }
 
-    public String decodeText(String text) {
+    public String decodingText(String text) {
 
         String decodedText = new String(text.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
 

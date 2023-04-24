@@ -48,6 +48,7 @@ public class GptClientAPI implements ClientAPI {
         HttpEntity<String> request = createHttpEntity(body);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(chatGptApiUrl, HttpMethod.POST, request, String.class);
+
         return responseEntity.getBody();
     }
 
@@ -56,13 +57,10 @@ public class GptClientAPI implements ClientAPI {
     public String receiveFromAPI(String response) {
 
         String responseBody = response;
-        JsonArray jsonArray = responseBodyToJsonArray(responseBody);
-        StringBuilder sb = findContent(jsonArray);
 
-        return sb.toString();
-    }
-
-    public StringBuilder findContent(JsonArray jsonArray) {
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = parser.parse(responseBody).getAsJsonObject();
+        JsonArray jsonArray = jsonObject.getAsJsonArray("choices");
 
         StringBuilder sb = new StringBuilder();
         for (JsonElement element : jsonArray) {
@@ -71,15 +69,6 @@ public class GptClientAPI implements ClientAPI {
             sb.append(content.replaceAll("\\n", ""));
         }
 
-        return sb;
-    }
-
-    public JsonArray responseBodyToJsonArray(String responseBody) {
-
-        JsonParser parser = new JsonParser();
-        JsonObject jsonObject = parser.parse(responseBody).getAsJsonObject();
-        JsonArray choicesArray = jsonObject.getAsJsonArray("choices");
-
-        return choicesArray;
+        return sb.toString();
     }
 }

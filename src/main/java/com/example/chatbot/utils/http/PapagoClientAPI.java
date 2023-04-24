@@ -1,5 +1,6 @@
 package com.example.chatbot.utils.http;
 
+import com.example.chatbot.utils.converter.DataConverter;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
@@ -28,26 +29,12 @@ public class PapagoClientAPI implements ClientAPI {
 
     public String translateTargetBySource(String text, String originalLanguage, String translationLanguage) {
 
-        String encodedText = encodingText(text);
+        String encodedText = DataConverter.encodingText(text);
 
         String requestUrl = papagoApiUrl + "?source=" + originalLanguage + "&target=" + translationLanguage + "&text=" + encodedText;
         String translatedText = receiveFromAPI(requestUrl);
 
-        String decodedText = decodingText(translatedText);
-
-        return decodedText;
-    }
-
-    public String encodingText(String text) {
-
-        String encodedText = new String(text.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-
-        return encodedText;
-    }
-
-    public String decodingText(String text) {
-
-        String decodedText = new String(text.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+        String decodedText = DataConverter.decodingText(translatedText);
 
         return decodedText;
     }
